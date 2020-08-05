@@ -1,0 +1,248 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>easyToLearnWithAyan</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %} ">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
+
+    <style>
+              .row-setting{
+    margin:80px 0px !important;
+
+}
+.imgsetting{
+border-radius: 40%;
+height: 90px;
+width: 90px;
+
+
+}
+.navbar .nav-link{
+font-size: 13px !important;
+font-family: "Gotham SSm",Helvetica,Arial,sans-serif !important;
+line-height: 1.42857 !important;
+color: 	#686868 !important;
+text-transform: uppercase;
+
+text-align: left;
+text-size-adjust: 100%;
+
+}
+
+
+
+   </style>
+
+</head>
+<body style="background-color:#F5F5F5">
+
+
+<div style="background-color:#2b5468; color:#fff;" class="text-center">
+<p class="mb-0 mt-0">Help : <i class="fa fa-mobile " aria-hidden="true"></i> 01759773446</p>
+</div>
+    <!-- Start: Navigation with Search -->
+    <nav class="navbar sticky-top navbar-light navbar-expand-md navigation-clean-search pb-1 pt-0" style="font-size: 13;">
+        <div class="container "><a class="navbar-brand text-success" href="#"><form class="form-inline mr-auto" method="get" action="{% url 'search' %}" target="_self">
+                    <div class="form-group"><label for="search-field"><i class="fa fa-search text-success"></i></label><input class="form-control search-field" type="search" id="search-field" name="search">
+                    </div>
+                </form></a>
+                <a style="text-decoration: none;" href="{% url 'home' %}"><h3 class="text-success ml-0">Ayan's blog</h3></a>
+                <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                id="navcol-1">
+                <ul class="nav navbar-nav ml-lg-5">
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item" role="presentation" style="font-size: 13;"><a class="nav-link" href="{% url 'blog' %}" style="font-size: 13;">Blog</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'aboutMe' %}">About</a></li>
+					<li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+         {% if user.is_authenticated %}
+
+
+                        <li class="nav-item dropdown  ">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <i class="fa fa-user" aria-hidden="true"></i> welcome {{request.user.username}} 
+                        </a>
+                        <div class="dropdown-menu edit-dropdown " aria-labelledby="navbarDropdown">
+
+                            <a class="dropdown-item" href="#">View Profile</a>
+                               <a class="dropdown-item" href="{% url 'userLogOut' %}">Logout</a>
+
+                        </div>
+                    </li>
+
+
+
+                    {% else %}
+
+      <li class="nav-item">
+       <a class="nav-link" href="{% url 'userLogIn' %}"  > Sign in</a>
+      </li>
+
+      
+      <li class="nav-item">
+       <a class="nav-link" href="{% url 'userSignUp' %}" > Create Account</a>
+      </li>
+      
+      
+      {% endif %}
+      
+
+       
+                </ul>
+                </div>
+        </div>
+			
+    </nav>
+
+
+
+
+
+
+
+{% for message in messages %}
+
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" >
+  <strong><i class="fa fa-comments" aria-hidden="true"></i> Message : </strong> {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+ {% endfor %}
+
+
+
+     {% block body %}
+     {% endblock body %}
+
+
+
+
+
+
+
+
+
+
+
+
+  <div style="margin-top:200px">
+
+     </div>
+     
+  
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+</div>
+</div>
+<!--footer-->
+
+ <div class="footer-clean" style="background-color:#2b5468; color:#fff;">
+        <footer>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <!-- Start: Services -->
+                    <div class="col-sm-4 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Sharing</a></li>
+                            <li><a href="#">Helping</a></li>
+                    
+                        </ul>
+                    </div>
+                    <!-- End: Services -->
+                    <!-- Start: About -->
+                    <div class="col-sm-4 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="{% url 'aboutMe' %}">Azizur Rahman Chy Ayam</a></li>
+                        </ul>
+                    </div>
+                    <!-- End: About -->
+                    <!-- Start: Careers -->
+                    <div class="col-sm-4 col-md-3 item">
+                        <h3>Categories</h3>
+                        <ul>
+                            {% for cat in  Categories %}
+                            <li><a href="{% url 'categories' cat.category %}">{{cat.category}}</a></li>  
+                            {% endfor %}
+                            
+                        </ul>
+                    </div>
+                    <!-- End: Careers -->
+                    <!-- Start: Social Icons -->
+                    <div class="col-lg-3 item social"><a href="https://www.facebook.com/imayanchy/"><i class="icon ion-social-facebook"></i></a><a href="mailto:aaziz9642@gmail.com"><i class="icon ion-social-twitter"></i></a><a href="https://www.linkedin.com/in/azizur-rahman-720636165"><i class="icon ion-social-linkedin"></i></a>
+                        <p class="copyright">ayan's blog © 2020</p>
+                    </div>
+                    <!-- End: Social Icons -->
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- End: Footer Clean -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+   
+    <script src="{% static 'js/file.js' %}"></script>
+     <script src="{% static 'js/code.js' %}"></script>
+
+    <script>
+
+   
+   const $dropdown = $(".dropdown");
+const $dropdownToggle = $(".dropdown-toggle");
+const $dropdownMenu = $(".dropdown-menu");
+const showClass = "show";
+ 
+$(window).on("load resize", function() {
+  if (this.matchMedia("(min-width: 768px)").matches) {
+    $dropdown.hover(
+      function() {
+        const $this = $(this);
+        $this.addClass(showClass);
+        $this.find($dropdownToggle).attr("aria-expanded", "true");
+        $this.find($dropdownMenu).addClass(showClass);
+      },
+      function() {
+        const $this = $(this);
+        $this.removeClass(showClass);
+        $this.find($dropdownToggle).attr("aria-expanded", "false");
+        $this.find($dropdownMenu).removeClass(showClass);
+      }
+    );
+  } else {
+    $dropdown.off("mouseenter mouseleave");
+  }
+});
+
+
+
+
+    </script>
+
+
+</body>
+</html>

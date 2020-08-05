@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title  %} home  {% endblock title %}
+
+
+  
+
+
+
+
+ {% block body %}
+
+   <div class="container">
+<div class="row ml-1 mb-1">
+  <h3 class="mb-5 mt-4"  id="heading">Create A Account</h3>
+</div>
+ 
+    <div class="row">
+     
+        <div class="col-sm-9 mb-5">
+       
+        
+         <div class="card p-1">
+<div class="card pl-1 pr-1 pt-5 pb-5">
+
+        
+<form method="post">{% csrf_token %}
+
+	{% for field in registration_form %}
+		<p>
+   
+         <label><i class="fa fa-plus-square-o" aria-hidden="true"></i> {{field.label_tag}}</label><br>
+            
+              {{field}}
+
+            
+          
+
+			{% if field.help_text %}
+				<small style="color: grey;">{{field.help_text}}</small>
+			{% endif %}
+
+			{% for error in field.errors %}
+				<p style="color: red;">{{error}}</p>
+			{% endfor %}
+		</p>
+	{% endfor %}
+	<button style="margin-top:10px" type="submit" class="btn btn-success">Create</button>
+
+</form>
+
+
+</div>
+
+
+        </div>
+    
+</div>
+<!-- col-2 start-->
+
+
+     <!-- col-2 start-->
+
+
+        <div class="col-sm-3 " >
+
+             <!--category-->
+                      <div class="card p-1">
+
+             <div class="card promoting-card">
+
+<h6 class="bg-success m-2 p-3 text-center" id="headings">Categories</h6>
+
+
+
+  
+
+  <!-- Card content -->
+  <div class="card-body">
+
+                        <div class="mt-3 text-center">
+                             {% for cat in Categories%}
+
+                      <a class="text-style" href="{% url 'categories' cat.category %}"> {{cat.category}},  </a>
+                            
+
+                         
+                            
+                             {% endfor %}
+                        </div>
+
+
+
+                    </div>
+
+  
+
+  
+
+</div>
+        
+
+           </div>
+
+                  <!--  recent post strat here -->
+  
+            <div class="card p-1 mt-5">
+   <!-- Card -->
+<div class="card promoting-card">
+
+<h6 class="bg-success m-2  p-3 text-center" id="headings">Most Popular Blogs</h6>
+
+ <div class="card-body">
+
+                        <div class="mt-3">
+                             {% for post in Populer%}
+
+
+
+                            <a href="{% url 'readMore' post.postId %}">
+                                <p    class="text-style">
+                                    {{ post.postDescriptions | truncatewords:10 }}
+                                     
+                                </p>
+                            </a>
+
+
+                            <span class="description"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.postTimeDate | naturaltime }}</span>
+                            <p class="description"><i class="fa fa-eye" aria-hidden="true"></i> {{ post.views }} views</p>
+
+
+<hr>
+
+
+
+                            <br>
+                             {% endfor %}
+                        </div>
+
+
+
+                    </div>
+                    </div>
+                    </div>
+                    
+<!-- Card  recent   -->
+
+<!-- col-2 start-->
+
+
+         <div class="card p-1 mt-5">
+                       
+<div class="card promoting-card">
+
+<h6 class="bg-success m-2  p-3 text-center" id="headings">Recent Blogs</h6>
+
+ <div class="card-body">
+
+                        <div class="mt-3">
+                             {% for post in RecentPost%}
+
+                            <img style="float:left;" class="d-inline-block" src="{{ post.get_photo_url }}" height=80;
+                                width=80; alt="abc">
+
+
+                            <a href="{% url 'readMore' post.postId %}">
+                                <p  style="margin-left:90px;" class="text-style">
+                                    {{ post.postTitle |truncatewords:2 }}
+                                </p>
+                            </a>
+
+
+                            <p style="margin-left:100px; margin-top:-10px;" class="description"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.postTimeDate | naturaltime }}</p>
+
+                         
+                            <hr>
+                             {% endfor %}
+                        </div>
+
+
+
+                    </div>
+
+  
+
+  
+
+</div>
+
+
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+ {% endblock body %}>

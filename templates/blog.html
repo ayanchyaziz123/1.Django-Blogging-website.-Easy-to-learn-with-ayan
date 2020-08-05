@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block  blogActive %}active{% endblock blogActive %}
+ {% block body %}
+<div class="container mt-3 mb-5">
+<div class="row ml-1 mb-1">
+  <h3 class="mb-5 mt-3"  id="heading">Recent Blogs</h3>
+</div>
+ 
+<!--row-1-->
+
+    <div class="row">
+
+        <!--col-1-->
+   <div class="col-sm-9">
+ 
+  
+
+    {% for post in Posts %}
+<div class="card p-1">
+     <div class="card pt-4 pl-0 pb-4 pr-0">
+     
+
+
+                    <div class="card-body">
+
+                        <div class="mt-3">
+
+                            <img style="float:left;" class="d-inline-block" src="{{ post.get_photo_url }}" height=100;
+                                width=100; alt="abc">
+
+
+                            <a href="{% url 'readMore' post.postId %}">
+                                  <p  style="margin-left:120px; "margin-bottom:20px;" id="ph">
+                                    {{ post.postTitle |truncatewords:10 }}
+                                </p>
+
+                                <p  style="margin-left:120px;" class="text-style">
+                                    {{ post.postDescriptions |truncatewords:30 }}
+                                </p>
+                            </a>
+
+
+                            <p style="margin-left:120px; margin-top:-10px;" class="description"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.postTimeDate | naturaltime }} <i class="fa fa-user pl-2" aria-hidden="true"></i>  {{ post.postAuthor }} 
+                            <i class="fa fa-eye pl-2" aria-hidden="true"></i> {{ post.views }} views 
+                           </p>
+               
+
+                            
+
+
+                        </div>
+     
+                    
+
+                    </div>
+
+                  
+                    <!--button c,c++ and python-->
+
+ 
+           <div class="container">
+   <p class="post d-inline "><strong>Note: </strong> <br>If you want to read full blog enter read more button<br></p><br>
+
+  <div id="accordion">
+    <div class="card">
+    <a style="font-weight:bold;" class="card-link text-dark" data-toggle="collapse" href="#ayan{{post.postId}}1">
+      <div class="card-header bg-white">
+        
+          C
+      
+      </div>
+        </a>
+      <div id="ayan{{post.postId}}1" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+         <pre  class="prettyprint">{{ post.postInC | safe | linebreaks  | truncatewords:30  }}<a href="{% url 'readMore' post.postId%}"> read more</a></pre>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+    <a style="font-weight:bold;" class="collapsed card-link text-dark" data-toggle="collapse" href="#ayan{{post.postId}}2">
+      <div class="card-header bg-white">
+        
+        C++
+    
+      </div>
+        </a>
+      <div id="ayan{{post.postId}}2" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+           <pre  class="prettyprint">{{ post.postInCplus | safe | linebreaks  | truncatewords:30  }}<a href="{% url 'readMore' post.postId%}"> read more</a></pre>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+     <a style="font-weight:bold;"  class="collapsed card-link text-dark" data-toggle="collapse" href="#ayan{{post.postId}}3">
+    <div class="card-header bg-white">
+       
+          Python
+      
+      </div>
+        </a>
+      <div id="ayan{{post.postId}}3" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+         <pre  class="prettyprint">{{ post.postInPython  | safe | linebreaks  | truncatewords:30  }}<a href="{% url 'readMore' post.postId%}"> read more</a></pre>
+       
+    
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+
+
+ <!--end button c,c++ and python-->
+
+
+
+
+
+
+
+                    <a class="ml-3 mt-3" href="{% url 'readMore' post.postId%}"> <span class="btn btn-success">Read More &rsaquo;</span></a>
+
+
+
+          
+
+          
+
+
+
+        </div>
+
+      </div>
+
+<hr>
+       <div style="margin-top:60px;">
+
+       </div>
+
+
+{% endfor %}
+
+
+
+       <nav aria-label="Page navigation example">
+
+       {% if Posts.has_other_pages %}
+  <ul class="pagination">
+    {% if Posts.has_previous %}
+
+      <li class="page-item disabled">
+      <a class="page-link" href="?page={{ Posts.previous_page_number }}" tabindex="-1">Previous</a>
+    </li>
+
+    {% else %}
+        <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1">Previous</a>
+    </li>
+    {% endif %}
+    {% for i in Posts.paginator.page_range %}
+      {% if Posts.number == i %}
+
+      <li class="page-item active">
+      <a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a>
+    </li>
+      {% else %}
+      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if Posts.has_next %}
+       <li class="page-item">
+      <a class="page-link" href="?page={{ Posts.next_page_number }}">Next</a>
+    </li>
+    {% else %}
+      <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1">Next</a>
+    </li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+
+</nav>
+
+
+       <!-- col-1 ending-->
+       </div>
+
+
+
+
+
+
+
+
+<!-- col-2 start-->
+
+
+        <div class="col-sm-3 " >
+
+             <!--category-->
+             <div class="card p-1">
+
+             <div class="card promoting-card">
+
+<h6 class="bg-success m-2 p-3 text-center" id="headings">Categories</h6>
+
+
+
+  
+
+  <!-- Card content -->
+  <div class="card-body">
+
+                        <div class="mt-3 text-center">
+                             {% for cat in Categories%}
+
+                      <a class="text-style" href="{% url 'categories' cat.category %}"> {{cat.category}},  </a>
+                            
+
+                         
+                            
+                             {% endfor %}
+                        </div>
+
+
+
+                    </div>
+
+  
+
+  </div>
+
+</div>
+        
+
+           
+
+                  <!--  PP post strat here -->
+  
+   
+   <!-- Card -->
+   <div class="card p-1 mt-5">
+<div class="card promoting-card">
+
+<h6 class="bg-success m-2  p-3 text-center" id="headings">Most Popular Blogs</h6>
+
+ <div class="card-body">
+
+                        <div class="mt-3">
+                             {% for post in Populer%}
+
+
+
+                            <a href="{% url 'readMore' post.postId %}">
+                                <p    class="text-style">
+                                    {{ post.postDescriptions | truncatewords:10 }}
+                                     
+                                </p>
+                            </a>
+
+
+                            <span class="description"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.postTimeDate | naturaltime }}</span>
+                            <p class="description"><i class="fa fa-eye" aria-hidden="true"></i> {{ post.views }} views</p>
+
+
+<hr>
+
+
+
+                            <br>
+                             {% endfor %}
+                        </div>
+
+
+
+                    </div>
+
+  
+
+  
+</div>
+</div>
+<!-- Card  recent   -->
+
+
+<div class="card p-1 mt-5">
+<div class="card promoting-card">
+
+<h6 class="bg-success m-2  p-3 text-center" id="headings">Recent Blogs</h6>
+
+ <div class="card-body">
+
+                        <div class="mt-3">
+                             {% for post in RecentPost%}
+
+                            <img style="float:left;" class="d-inline-block" src="{{ post.get_photo_url }}" height=80;
+                                width=80; alt="abc">
+
+
+                            <a href="{% url 'readMore' post.postId %}">
+                                <p  style="margin-left:90px;" class="text-style">
+                                    {{ post.postTitle |truncatewords:2 }}
+                                </p>
+                            </a>
+
+
+                            <p style="margin-left:100px; margin-top:-10px;" class="description"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.postTimeDate | naturaltime }}</p>
+
+                         
+                            <hr>
+                             {% endfor %}
+                        </div>
+
+
+
+                    </div>
+
+  
+
+  
+
+</div>
+
+</div>
+
+</div>
+
+  
+
+</div>
+
+
+
+
+</div>
+
+
+
+ {% endblock body %}

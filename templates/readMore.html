@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+
+
+ {% block body %}
+
+<div class="row ml-1 mb-1">
+    <h2 class="mb-1"  id="heading">Read More</h2>
+
+</div>
+
+<!--row-1--->
+
+    <div class="row">
+
+        <!--col-1-->
+   <div class="col-sm-8">
+
+
+  
+
+          <div class="card pt-4 pl-4 pb-4 pr-4">
+
+         
+
+                     {% if post.postImage %}
+                    <img src="{{post.postImage.url }} " class="img-fluid img-thumbnail img-rounded"
+
+                        alt="Responsive image">
+ {% endif %}
+                    <div class="card-body">
+                        <div class="card-title">
+
+                            <h5 class="card-title post-title"> {{ post.postTitle }} </h5>
+                            <h6 class="post-category">Category : {{post.category}}
+                                published on</h6>
+                            <p class="post-time ">
+                                {{ post.postTimeDate }}
+                            </p>
+                            <div class="post-time mb-5">
+                                <p class="post">Author : {{ post.postAuthor |truncatewords:2 }}</p>
+
+                            </div>
+                
+
+                        </div>                        </div>
+
+
+                          <!--button c,c++ and python-->
+
+
+           <div class="container">
+  <p class="post"><strong>Note: </strong>{{ post.postDescriptions  | safe | linebreaks }}</p>
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header">
+        <a style="font-weight:bold; color:#008000;" class="card-link" data-toggle="collapse" href="#collapseOne">
+          C
+        </a>
+      </div>
+      <div id="collapseOne" class="collapse show" data-parent="#accordion">
+        <div class="card-body">
+        <p class="post">{{ post.postInC  | safe | linebreaks }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <a style="font-weight:bold; color:#008000;" class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+        C++
+      </a>
+      </div>
+      <div id="collapseTwo" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <p class="post">{{ post.postInCplus  | safe | linebreaks }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <a style="font-weight:bold; color:#008000;"  class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+          Python
+        </a>
+      </div>
+      <div id="collapseThree" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+        <p class="post">{{ post.postInPython  | safe | linebreaks }}</p>
+       
+       
+    
+        </div>
+      
+      </div>
+    </div>
+  </div>
+<br>
+  <a class=" btn text-white btn-success"> <i class="fa fa-heart"></i> Like</a>
+  <a class=" btn text-white btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+   <i class="fa fa-comment" aria-hidden="true"></i> comment</a>
+</div>
+    
+
+
+
+ <!--end button c,c++ and python-->
+   <div style="margin-top:150px;">
+
+       </div>
+
+       <!--comments-->
+<hr>
+       <h1>Comments({{comments.count}})</h1>
+
+
+<!--comments-->
+          <div class="container">
+
+      
+
+    <div class="collapse" id="collapseExample">  
+
+    <h2>Add a new comment</h2>
+<form action="." method="post">
+    {{ comment_form.as_p }}
+    {% csrf_token %}
+    <button type="submit">Add comment</button>
+</form>
+</div>
+
+</div>
+	
+	<div class="card mt-5">
+
+
+     
+
+	    <div class="card-body">
+        {% for comment in comments %}
+	        <div class="d-flex flex-row comment-row m-t-0">
+                    <div class="p-2"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583336/AAA/4.jpg" alt="user" width="50" class="rounded-circle"></div>
+                    <div class="comment-text w-100">
+                        <h6 class="font-medium">{{comment.user.username}}</h6> <span class="m-b-15 d-block">{{comment.comment}} </span>
+                        <div class="comment-footer"> <span class="text-muted float-right">{{ comment.timestamp | naturaltime}}</span><br> <button type="button" class="btn btn-success btn-sm">Like</button> <button type="button" class="btn btn-success btn-sm"
+                        data-toggle="collapse" href="#collapseExamplee{{comment.sno}}" role="button" aria-expanded="false" aria-controls="collapseExample">Reply</button> </div>
+                    </div>
+                    
+                </div> 
+
+                <!--reply-->
+
+                <div class="collapse" id="collapseExamplee{{comment.sno}}">
+  <div class="card card-body mt-3">
+    {% if user.is_authenticated %}
+      <form method="post" class="form-horizontal" action="{% url 'postComment' %}">
+      
+      {% csrf_token %} 
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="email">Reply:</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="comment" name="comment" placeholder="Enter comment">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <input type="hidden" class="form-control" id="pwd" name="parentSno" value="{{comments.sno}}" placeholder="Enter password">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-10">
+      <input type="hidden" class="form-control" id="pwd" name="postSno" value="{{post.postId}}" placeholder="Enter password">
+    </div>
+  </div>
+ 
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+    
+      <button type="submit" class="btn btn-success">Reply</button>
+    </div>
+  </div>
+</form>
+{% else %}
+
+<p>Please Login</p>
+
+
+{%endif%}
+     
+  </div>
+</div>
+                <hr>
+                <hr>
+            	{% endfor %} 
+                </div>  
+                </div>  </div>  
+       
+
+
+
+       <!--comments end-->
+
+
+
+
+                    </div>
+
+
+
+
+       <div style="margin-top:50px;">
+
+       </div>
+
+
+
+       <!-- col-1 ending-->
+       </div>
+
+
+
+
+
+
+
+<!-- col-2 start-->
+
+
+        <div class="col-sm-3 ml-lg-5" >
+
+            <!--about me-->
+
+          <div class="card text-center ">
+                    <h6>About Me</h6>
+<div class="card card-cascade">
+
+  <!-- Card image -->
+  <div class="view view-cascade overlay">
+    <img class="card-img-top rounded-circle pl-5 pr-5 pt-3" src="{% static 'aya.jpeg' %}" alt="Card image cap">
+    <a>
+      <div class="mask rgba-white-slight"></div>
+    </a>
+  </div>
+
+  <!-- Card content -->
+  <div class="card-body card-body-cascade text-center">
+
+    <!-- Title -->
+    <h4 class="card-title"><strong>Azizur Rahman</strong></h4>
+    <!-- Subtitle -->
+    <h6 class="font-weight-bold indigo-text py-2">Student of metrpolitan University</h6>
+    <!-- Text -->
+    <p class="card-text">Right now, I am doing cse from MU
+    </p>
+
+    <!-- Facebook -->
+    <a href="https://www.linkedin.com/in/azizur-rahman-720636165"  class="btn-floating btn-small btn-fb"><i class="fa fa-linkedin-square
+
+"></i></a>
+    <!-- Twitter -->
+    <a href="https://www.facebook.com/imayanchy/" class="btn-floating btn-small btn-tw" style="padding:10px;"><i class="fa fa-facebook-square
+
+"></i></a>
+    <!-- Google + -->
+    <a href="mailto:aaziz9642@gmail.com"  class="btn-floating btn-small btn-dribbble"><i class="fa fa-envelope-o"></i></a>
+
+  </div>
+
+</div>
+              <!--ending of about me-->
+                </div>
+
+
+
+
+                  <!--  recent post strat here -->
+  
+   
+   <!-- Card -->
+<div class="card promoting-card mt-5">
+
+<h6 class="bg-success m-2  p-3 text-center" id="heading">Recent Post</h6>
+
+ <div class="card-body">
+
+                        <div class="mt-3">
+                             {% for post in RecentPost%}
+
+                            <img style="float:left;" class="d-inline-block" src="{{ post.get_photo_url }}" height=80;
+                                width=80; alt="abc">
+
+
+                            <a href="{% url 'readMore' post.postId %}">
+                                <p  style="margin-left:90px;" class="text-style" >
+                                    {{ post.postTitle |truncatewords:2 }}
+                                </p>
+                            </a>
+
+
+                            <p style="margin-left:100px; margin-top:-10px;" class="description">{{ post.postTimeDate }}</p>
+
+                            <br>
+                             {% endfor %}
+                        </div>
+
+
+
+                    </div>
+
+  
+
+  
+
+</div>
+<!-- Card -->
+
+
+<div class="card promoting-card mt-5">
+
+<h6 class="bg-success m-2 p-3 text-center" id="heading">Categories</h6>
+
+
+
+  
+
+  <!-- Card content -->
+  <div class="card-body">
+
+                        <div class="mt-3 text-center">
+                             {% for cat in Categories%}
+
+                            <a class="text-style" href="#"> {{cat.category}} </a><br>
+                            
+
+                         
+                            
+                             {% endfor %}
+                        </div>
+
+
+
+                    </div>
+
+  
+
+  
+
+</div>
+
+</div>
+</div>
+
+
+
+
+         <i class="fa fa-envelope" aria-hidden="true"></i> <label>{{registration_form.email.label_tag}}</label>
+         {{registration_form.email}}<br>
+         <i class="fa fa-user" aria-hidden="true"></i> <label>{{registration_form.username.label_tag}}</label>
+         {{registration_form.username}}<br>
+
+          <i class="fa fa-key" aria-hidden="true"></i> <label>{{registration_form.password1.label_tag}}</label>
+         {{registration_form.password1}}<br>
+          <i class="fa fa-key" aria-hidden="true"></i> <label>{{registration_form.password2.label_tag}}</label>
+         {{registration_form.password2}}
+
+
+
+
+ {% endblock body %}

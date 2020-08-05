@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block homeActive %}active{% endblock homeActive %}
+
+
+
+ {% block body %}
+
+
+ <!-- End: Navigation with Search -->
+    <!-- Start: Simple Slider -->
+    <div class="simple-slider">
+        <!-- Start: Slideshow -->
+        <div class="swiper-container">
+            <!-- Start: Slide Wrapper -->
+            <div class="swiper-wrapper">
+               {% for slider in Slider %}
+                <!-- Start: Slide -->
+                <div class="swiper-slide" style="background-image:url({{slider.get_photo1}});"></div>
+                <!-- End: Slide -->
+                <!-- Start: Slide -->
+                <div class="swiper-slide" style="background-image:url({{slider.get_photo2}});"></div>
+                <!-- End: Slide -->
+                <!-- Start: Slide -->
+                <div class="swiper-slide" style="background-image:url({{slider.get_photo3}});"></div>
+                <!-- End: Slide -->
+                {% endfor %}
+            </div>
+            <!-- End: Slide Wrapper -->
+            <!-- Start: Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- End: Pagination -->
+            <!-- Start: Previous -->
+            <div class="swiper-button-prev"></div>
+            <!-- End: Previous -->
+            <!-- Start: Next -->
+            <div class="swiper-button-next"></div>
+            <!-- End: Next -->
+        </div>
+        <!-- End: Slideshow -->
+    </div>
+    <!-- End: Simple Slider -->
+    <!-- Start: Article List -->
+
+  <!--row 1-->
+<div class="container">
+  <div class="row mt-5">
+  <!--col 1-->
+     
+     <div class="col-sm-9 mb-5">
+
+
+     <!-- Card -->
+<div class="card promoting-card">
+
+
+
+  <!-- Card content -->
+  <div class="card-body d-flex flex-row">
+
+  
+    <div>
+
+      <!-- Title -->
+      <h4 class="card-title font-weight-bold mb-2" id="heading">EasyToLearnWithAyan</h4>
+      <span>Here, you will get all things about programmming.
+      </span>
+    
+    </div>
+
+  </div>
+
+ 
+</div>
+
+<div style="margin-top:50px;">
+
+       </div>
+
+
+
+<!--recent post-->
+<div class="card p-1">
+<div class="card">
+
+
+
+
+<h6 class="bg-success m-2  p-3 text-center" id="headings">Recent Blogs</h6>
+
+
+{% for post in RecentPost %}
+
+
+       <div class="card pt-4 pl-4 pb-4 pr-4">
+
+
+                    <div class="card-body">
+
+                        <div class="mt-3">
+
+                            <img style="float:left;" class="d-inline-block" src="{{ post.get_photo_url }}" height=80;
+                                width=80; alt="abc">
+
+
+                            <a href="{% url 'readMore' post.postId %}">
+
+                                <p  style="margin-left:100px;" class="text-style">
+                                    {{ post.postDescriptions |truncatewords:30 }}
+                                </p>
+                            </a>
+
+
+                           <p style="margin-left:120px; margin-top:-10px;" class="description"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.postTimeDate | naturaltime }} <i class="fa fa-user pl-2" aria-hidden="true"></i>  {{ post.postAuthor }} 
+                            <i class="fa fa-eye pl-2" aria-hidden="true"></i> {{ post.views }} views 
+                            </p>
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+        </div>
+
+       {% endfor %}
+
+
+
+
+
+</div>
+
+ 
+    </div> 
+
+     </div>
+
+   <div class="col-sm-3 " >
+
+             <!--category-->
+             <div class="card p-1">
+
+             <div class="card promoting-card">
+
+<h6 class="bg-success m-2 p-3 text-center" id="headings">Categories</h6>
+
+
+
+  
+
+  <!-- Card content -->
+  <div class="card-body">
+
+                        <div class="mt-3 text-center">
+                             {% for cat in Categories%}
+
+                      <a class="text-style" href="{% url 'categories' cat.category %}"> {{cat.category}},  </a>
+                            
+
+                         
+                            
+                             {% endfor %}
+                        </div>
+
+
+
+                    </div>
+
+  
+
+  </div>
+
+</div>
+        
+
+           
+
+                  <!--  recent post strat here -->
+  
+   
+   <!-- Card -->
+  <div class="card p-1 mt-5">
+<div class="card promoting-card">
+
+<h6 class="bg-success m-2  p-3 text-center" id="headings">Most Popular Blogs</h6>
+
+ <div class="card-body">
+
+                        <div class="mt-3">
+                             {% for post in Populer%}
+
+
+
+                            <a href="{% url 'readMore' post.postId %}">
+                                <p    class="text-style">
+                                    {{ post.postDescriptions | truncatewords:10 }}
+                                     
+                                </p>
+                            </a>
+
+
+                              <span class="description"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.postTimeDate | naturaltime }}</span>
+                            <p class="description"><i class="fa fa-eye" aria-hidden="true"></i> {{ post.views }} views</p>
+                    
+
+<hr>
+
+                            <br>
+                             {% endfor %}
+                        </div>
+
+
+
+                    </div>
+
+  
+
+  </div>
+
+</div>
+<!-- Card  recent   -->
+
+
+
+
+
+
+
+</div>
+
+  </div>
+
+</div>
+
+{% endblock body %}
